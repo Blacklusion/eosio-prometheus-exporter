@@ -1,0 +1,4 @@
+dataclasses
+prometheus_client
+requests
+python-dateutil
