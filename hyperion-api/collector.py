@@ -53,12 +53,14 @@ class MyRequestHandler(MetricsHandler):
     totalIndexedBlocks = lastIndexedBlock = missingBlocks = blockDelta = queryTimeMs = headBlockNum = 0
     isCached = False
     for key,value in j.items():
-      if key == 'NodeosRPC':
-        headBlockNum = item['head_block_num']
+      if key == 'health':
+        for i in range(len(value)):   
+          if value[i]['service'] == 'NodeosRPC':
+            headBlockNum = value[i]['service_data']['head_block_num']
       
-      if key == 'Elasticsearch':
-        lastIndexedBlock = item['last_indexed_block']
-        totalIndexedBlocks = item['totalIndexedBlocks']
+          if value[i]['service'] == 'Elasticsearch':
+            lastIndexedBlock = value[i]['service_data']['last_indexed_block']
+            totalIndexedBlocks = value[i]['service_data']['total_indexed_blocks']
 
       if key == 'cached':
         isCached = True
