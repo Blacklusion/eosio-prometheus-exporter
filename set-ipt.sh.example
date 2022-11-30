@@ -7,7 +7,16 @@ cd "${DIR}"
 MANAGEMENT_IP="1.2.3.4"
 
 # Disallow access to the ports we are using unless the IP is the management IP address.
-iptables -I DOCKER-USER -p tcp --dport 6100 ! -s "${MANAGEMENT_IP}" -j DROP
+# Check for rule existence - don't add duplicate rules.
+if ! iptables --check DOCKER-USER --protocol tcp --dport 6100 ! --source "${MANAGEMENT_IP}" --jump DROP; then
+  iptables --insert DOCKER-USER --protocol tcp --dport 6100 ! --source "${MANAGEMENT_IP}" --jump DROP
+fi
+if ! iptables --check DOCKER-USER --protocol tcp --dport 6101 ! --source "${MANAGEMENT_IP}" --jump DROP; then
+  iptables --insert DOCKER-USER --protocol tcp --dport 6101 ! --source "${MANAGEMENT_IP}" --jump DROP
+fi
+if ! iptables --check DOCKER-USER --protocol tcp --dport 6102 ! --source "${MANAGEMENT_IP}" --jump DROP; then
+  iptables --insert DOCKER-USER --protocol tcp --dport 6102 ! --source "${MANAGEMENT_IP}" --jump DROP
+fi
 
 cd "${starting_dir}"
 
