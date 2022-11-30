@@ -10,7 +10,7 @@ else
   cat <<EOF
 
 You should copy set-ipt.sh.example to set-ipt.sh and adjust the iptables settings in it
-to work in your environment.
+to work in your environment.  Also make set-ipt.sh executable.
 The reason this is neccessary is that docker by default will allow full access through
 iptables for any published ports.  You almost certainly don't want this to happen.
 If you are protected by some other firewall mechanism (another device) other than
