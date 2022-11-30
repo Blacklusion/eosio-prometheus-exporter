@@ -5,11 +5,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${DIR}"
 
 if [ -x ./set-ipt.sh ]; then
-  ./set-ipt.sh
+  if ! ./set-ipt.sh; then
+    printf "There was a problem running the set-ipt.sh iptables security script.  Please investigate.\n"
+    exit 1
+  fi
 else
   cat <<EOF
 
-You should copy set-ipt.sh.example to set-ipt.sh and adjust the iptables settings in it
+You need to copy set-ipt.sh.example to set-ipt.sh and adjust the iptables settings in it
 to work in your environment.  Also make set-ipt.sh executable.
 The reason this is neccessary is that docker by default will allow full access through
 iptables for any published ports.  You almost certainly don't want this to happen.
@@ -21,6 +24,7 @@ of a management IP address.  After making set-ipt.sh please adjust the setting(s
 it to improve security for your system.
 
 EOF
+  exit 1
 fi
 
 collectors="atomic-api blockchain-api hyperion-api"

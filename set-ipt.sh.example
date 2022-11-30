@@ -5,6 +5,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${DIR}"
 
 MANAGEMENT_IP="1.2.3.4"
+if [ "${MANAGEMENT_IP}" == "1.2.3.4" ]; then
+  cat <<EOF
+  Please change the MANAGEMENT_IP setting in set-ipt.sh!
+EOF
+  exit 1
+fi
 
 # Disallow access to the ports we are using unless the IP is the management IP address.
 # Check for rule existence - don't add duplicate rules.
