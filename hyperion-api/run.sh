@@ -3,4 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${DIR}"
 
-docker run -d --rm --name hyperion-api -p 127.0.0.1:6101:8000 hyperion-api
+if ! docker network inspect eosio-exporters >/dev/null 2>&1; then
+  docker network create eosio-exporters || exit 1
+fi
+
+docker run -d --rm --name hyperion-api --network eosio-exporters hyperion-api

@@ -3,4 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${DIR}"
 
-docker run -d --rm --name atomic-api -p 127.0.0.1:6102:8000 atomic-api
+if ! docker network inspect eosio-exporters >/dev/null 2>&1; then
+  docker network create eosio-exporters || exit 1
+fi
+
+docker run -d --rm --name atomic-api --network eosio-exporters atomic-api
