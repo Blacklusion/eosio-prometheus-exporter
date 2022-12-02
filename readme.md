@@ -10,3 +10,8 @@ All exporters are using the multi-target infrastructure, meaning that you will o
 The start.sh script will call each exporters run.sh script.
 The run.sh scripts will create a docker user-defined bridge network for the containers to attach to.
 Other applications that query these exporters should also attach to this network.  It is called 'eosio-exporters'.
+The exporters can be reached on the network by name:
+* atomic-api
+* blockchain-api
+* hyperion-api
+And all will be at port 8000.
