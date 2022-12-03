@@ -84,8 +84,8 @@ class MyRequestHandler(MetricsHandler):
     if "db_target" in query:
       self.dbTarget = query['db_target'][0]
 
-    print(getTimestamp() + ": NODEOS API Exporter request received. target = " + self.host, flush=True)
     if len(self.host) > 0:
+      print(getTimestamp() + ": NODEOS API Exporter request received. target = " + self.host, flush=True)
       self.nodeosAPI()
 
 
