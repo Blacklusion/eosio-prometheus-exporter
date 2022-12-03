@@ -70,8 +70,8 @@ class MyRequestHandler(MetricsHandler):
 
 
   def do_GET(self):
-    print(getTimestamp() + ': Atomic API Exporter path="' + self.path + '"')
-    parsed_path = urllib.parse.urlsplit(self.path)
+    unquoted = urllib.parse.unquote_plus(self.path)
+    parsed_path = urllib.parse.urlsplit(unquoted)
     query = urllib.parse.parse_qs(parsed_path.query)
     if "target" in query:
       self.host = query['target'][0]
