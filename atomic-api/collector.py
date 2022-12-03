@@ -28,7 +28,7 @@ ENDPOINT = ""
 PORT = ""
 
 def getTimestamp():
-    return str(datetime.now().isoformat())
+  return str(datetime.now().isoformat())
 
 def exitMsg(*args):
   print(getTimestamp() + ": Atomic API Exporter exiting")
@@ -70,26 +70,25 @@ class MyRequestHandler(MetricsHandler):
 
 
   def do_GET(self):
-    parsed_path = urllib.parse.urlsplit(self.path)
+    unquoted = urllib.parse.unquote_plus(self.path)
+    parsed_path = urllib.parse.urlsplit(unquoted)
     query = urllib.parse.parse_qs(parsed_path.query)
-    if ("target" in query):
+    if "target" in query:
       self.host = query['target'][0]
-      print(getTimestamp() + ": Atomic API Exporter request received. target = " + self.host , flush=True)
+      print(getTimestamp() + ": Atomic API Exporter request received. target = " + self.host, flush=True)
       self.atomicAPI()
-
     else:
-      print(getTimestamp() + ": Atomic API Exporter request received. target = NO TARGET" , flush=True)
+      print(getTimestamp() + ": Atomic API Exporter request received. target = None", flush=True)
       self.send_response(404)
       self.end_headers()
-      self.wfile.write(b"No targets\n")
+      self.wfile.write(b"No target\n")
 
 
 if __name__ == '__main__':
   PORT = 8000
-  print(getTimestamp() + ": Atomic API Exporter started. Listening on port " + str(PORT), flush=True)
+  print(getTimestamp() + ": Atomic API Exporter started. Listening on PORT " + str(PORT), flush=True)
   # ENDPOINT = sys.argv[2]
   ENDPOINT = ''
 
   server_address = ('', int(PORT))
-  server = HTTPServer(server_address, MyRequestHandler)
-  server.serve_forever()
+  HTTPServer(server_address, MyRequestHandler).serve_forever()
