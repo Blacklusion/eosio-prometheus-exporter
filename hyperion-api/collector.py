@@ -90,6 +90,7 @@ class MyRequestHandler(MetricsHandler):
 
 
   def do_GET(self):
+    print(getTimestamp() + ': Hyperion API Exporter path="' + self.path + '"')
     parsed_path = urllib.parse.urlsplit(self.path)
     query = urllib.parse.parse_qs(parsed_path.query)
     if "target" in query:
