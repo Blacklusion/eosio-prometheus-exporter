@@ -28,7 +28,7 @@ ENDPOINT = ""
 PORT = ""
 
 def getTimestamp():
-    return str(datetime.now().isoformat())
+  return str(datetime.now().isoformat())
 
 def exitMsg(*args):
   print(getTimestamp() + ": Hyperion API Exporter exiting")
@@ -92,13 +92,12 @@ class MyRequestHandler(MetricsHandler):
   def do_GET(self):
     parsed_path = urllib.parse.urlsplit(self.path)
     query = urllib.parse.parse_qs(parsed_path.query)
-    if ("target" in query):
+    if "target" in query:
       self.host = query['target'][0]
-      print(getTimestamp() + ": Hyperion API Exporter request received. target = " + self.host , flush=True)
+      print(getTimestamp() + ": Hyperion API Exporter request received. target = " + self.host, flush=True)
       self.hyperionAPI()
-
     else:
-      print(getTimestamp() + ": Hyperion API Exporter request received. target = None" , flush=True)
+      print(getTimestamp() + ": Hyperion API Exporter request received. target = None", flush=True)
       self.send_response(404)
       self.end_headers()
       self.wfile.write(b"No target\n")

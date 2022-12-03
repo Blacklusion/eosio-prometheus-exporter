@@ -26,7 +26,7 @@ ENDPOINT = ""
 PORT = ""
 
 def getTimestamp():
-    return str(datetime.now().isoformat())
+  return str(datetime.now().isoformat())
 
 def exitMsg(*args):
   print(getTimestamp() + ": NODEOS API Exporter exiting")
@@ -49,7 +49,6 @@ class MyRequestHandler(MetricsHandler):
     delta = (timeNow - timestamp).total_seconds() * 1000.0
     delta = max(0, delta)
     NODEOS_HEAD_BLOCK_TIME_DELTA_MS.set(delta)
-
 
     sizeBytes, usedBytes, freeBytes = -1, -1, -1
     if(self.dbTarget):
@@ -77,15 +76,16 @@ class MyRequestHandler(MetricsHandler):
     if "target" in query:
       self.host = query['target'][0]
     else:
-      print(getTimestamp() + ": NODEOS API Exporter request received. target = None" , flush=True)
+      print(getTimestamp() + ": NODEOS API Exporter request received. target = None", flush=True)
       self.send_response(404)
       self.end_headers()
       self.wfile.write(b"No target\n")
 
     if "db_target" in query:
       self.dbTarget = query['db_target'][0]
-    print(getTimestamp() + ": NODEOS API Exporter request received. target = " + self.host , flush=True)
-    if(len(self.host) > 0):
+
+    print(getTimestamp() + ": NODEOS API Exporter request received. target = " + self.host, flush=True)
+    if len(self.host) > 0:
       self.nodeosAPI()
 
 
