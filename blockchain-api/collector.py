@@ -70,7 +70,7 @@ class MyRequestHandler(MetricsHandler):
 
 
   def do_GET(self):
-    self.host, self.dbTarget = '',''
+    self.host, self.dbTarget = None,None
     parsed_path = urllib.parse.urlsplit(self.path)
     query = urllib.parse.parse_qs(parsed_path.query)
     if "target" in query:
@@ -84,7 +84,7 @@ class MyRequestHandler(MetricsHandler):
     if "db_target" in query:
       self.dbTarget = query['db_target'][0]
 
-    if len(self.host) > 0 and self.host != '':
+    if self.host:
       print(getTimestamp() + ": NODEOS API Exporter request received. target = " + self.host, flush=True)
       self.nodeosAPI()
 
