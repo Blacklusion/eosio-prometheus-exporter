@@ -73,7 +73,9 @@ class MyRequestHandler(MetricsHandler):
     print(getTimestamp() + ': NODEOS API Exporter path="' + self.path + '"')
     self.host, self.dbTarget = None,None
     parsed_path = urllib.parse.urlsplit(self.path)
+    print(getTimestamp() + ': NODEOS API Exporter parsed_path="' + parsed_path + '"')
     query = urllib.parse.parse_qs(parsed_path.query)
+    print(getTimestamp() + ': NODEOS API Exporter query="' + query + '"')
     if "target" in query:
       self.host = query['target'][0]
     else:
