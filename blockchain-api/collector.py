@@ -72,7 +72,9 @@ class MyRequestHandler(MetricsHandler):
   def do_GET(self):
     print(getTimestamp() + ': NODEOS API Exporter path="' + self.path + '"')
     self.host, self.dbTarget = None,None
-    parsed_path = urllib.parse.urlsplit(self.path)
+    unquoted = urllib.parse.unquote_plus(self.path)
+    print(getTimestamp() + ': NODEOS API Exporter unquoted="' + unquoted + '"')
+    parsed_path = urllib.parse.urlsplit(unquoted)
     print(getTimestamp() + ': NODEOS API Exporter parsed_path="' + str(parsed_path) + '"')
     query = urllib.parse.parse_qs(parsed_path.query)
     print(getTimestamp() + ': NODEOS API Exporter query="' + str(query) + '"')
